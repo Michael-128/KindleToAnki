@@ -1,9 +1,2 @@
-<form>
-    <input type="file" (change)="onFileChange($event)"/>
-</form>
-
-<br>
-
-<ol>
-    <li *ngFor="let lookup of lookups" [innerHTML]=" getLookupSentence(lookup)"></li>
-</ol>
+<router-outlet></router-outlet>
+<!--<input type="file" (change)="onDictFileChange($event)"/>-->

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DBReaderService } from 'src/services/dbreader.service';
+import { DBReaderService } from 'src/app/services/dbreader.service';
 
 describe('DBReaderService', () => {
   let service: DBReaderService;
