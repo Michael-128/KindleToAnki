@@ -1,8 +1,17 @@
 import { ITerm } from 'src/types/dictionary'
 import * as JSZip from '../../node_modules/jszip'
+import { IStatus, Status } from 'src/types/IStatus'
+import { Observable, of } from 'rxjs'
 
-export class DictionaryReaderFactory {
-    async createDictionaryReader(dictFile: Buffer): Promise<DictionaryReader> {
+export class DictionaryReader implements IStatus {
+    private title: string = ""
+    private termBank: ITerm[] = []
+
+    public status: Observable<Status> = of(Status.UNINITIALIZED)
+
+    public async initDict(dictFile: Buffer) {
+        this.status = of(Status.INITIALIZING)
+
         const jszip = JSZip()
         const content = await jszip.loadAsync(dictFile)
 
@@ -34,18 +43,11 @@ export class DictionaryReaderFactory {
                 sequence: term[6] as number
             }
         })
-    
-        return new DictionaryReader(indexJson.title, termBank)
-    }
-}
 
-export class DictionaryReader {
-    private title: string
-    private termBank: ITerm[]
-
-    constructor(title: string, termBank: ITerm[]) {
-        this.title = title
+        this.title = indexJson.title
         this.termBank = termBank
+
+        this.status = of(Status.INITIALIZED)
     }
 
     public getDefinitions(keyword: string): string[] {

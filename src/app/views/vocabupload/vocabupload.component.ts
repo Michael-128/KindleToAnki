@@ -16,6 +16,6 @@ export class VocabUploadView {
   async onDBFileDrop(files: FileList) {
     if(!files) return
     await this.DBReader.openDatabase(await files[0].arrayBuffer() as Buffer)
-    this.router.navigate(["dictionary"])
+    this.router.navigate(["vocab"])
   }
 }

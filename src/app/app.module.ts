@@ -8,7 +8,7 @@ import { RouterOutlet, provideRouter } from '@angular/router';
 import { VocabUploadView } from './views/vocabupload/vocabupload.component';
 import { DropzoneComponent } from './components/dropzone/dropzone.component';
 import { DictionaryUploadComponent } from './views/dictionaryupload/dictionaryupload.component';
-import { VocabbrowserComponent as VocabBrowserComponent } from './views/vocabbrowser/vocabbrowser.component';
+import { VocabBrowserComponent as VocabBrowserComponent } from './views/vocabbrowser/vocabbrowser.component';
 
 
 @NgModule({

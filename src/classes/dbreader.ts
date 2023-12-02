@@ -1,21 +1,19 @@
 import * as initSqlJs from "sql.js";
 import { Database } from "sql.js";
 import { IWord, IBookInfo, IDictInfo, ILookup } from '../types/database'
+import { IStatus, Status } from "src/types/IStatus";
+import { Observable, of } from "rxjs";
 
-export class DBReaderFactory {
-    public async createDBReader(database: Buffer): Promise<DBReader> {
-        const dbreader = new DBReader();
-        await dbreader.initDB(database)
-        return dbreader;
-    }
-}
-
-export class DBReader {
+export class DBReader implements IStatus {
     db!: Database
 
+    public status: Observable<Status> = of(Status.UNINITIALIZED)
+
     async initDB(database: Buffer) {
+        this.status = of(Status.INITIALIZING)
         const SQL = await initSqlJs({locateFile: url => "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.9.0/sql-wasm.wasm"})
         this.db = new SQL.Database(new Uint8Array(database))
+        this.status = of(Status.INITIALIZED)
     }
 
     getDictById(id: string): IDictInfo {

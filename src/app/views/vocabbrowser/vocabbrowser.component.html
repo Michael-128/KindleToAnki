@@ -1,1 +1,5 @@
-<p>vocabbrowser works!</p>
+
+<div *ngFor="let lookup of lookups">
+    <td><span [innerHTML]="getLookedUpSentence(lookup)"></span></td>
+    <td><span [innerHTML]="getDefinitions(lookup.getWord())"></span></td>
+</div>

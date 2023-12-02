@@ -11,7 +11,7 @@ import { DictionaryReaderService } from 'src/app/services/dictreader.service';
   imports: [DropzoneComponent]
 })
 export class DictionaryUploadComponent {
-  constructor(private DictionaryReader: DictionaryReaderService, private router: Router) {  }
+  constructor(private DictionaryReader: DictionaryReaderService, private router: Router) { }
 
   async onDictFileDrop(files: FileList) {
     if(!files) return

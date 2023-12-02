@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { DictionaryReader, DictionaryReaderFactory } from 'src/classes/dictreader';
+import { DictionaryReader } from 'src/classes/dictreader';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +10,10 @@ export class DictionaryReaderService {
     this._init()
   }
 
-  private DictionaryReaderFactory = new DictionaryReaderFactory();
-  private DictionaryReader?: DictionaryReader
-
-  public isInitialized: Observable<boolean> = of(false)
+  private DictionaryReader: DictionaryReader = new DictionaryReader()
 
   private async _init() {
-    this.DictionaryReader = await this.DictionaryReaderFactory.createDictionaryReader(await this._getDictionaryFile())
-    this.isInitialized = of(true)
+    this.DictionaryReader.initDict(await this._getDictionaryFile())
   }
 
   private async _saveDictionaryFile(dictionary: Buffer) {
@@ -39,15 +35,12 @@ export class DictionaryReaderService {
   }
 
   async openDictionary(dictionary: Buffer): Promise<boolean> {
-    const dictreader = await this.DictionaryReaderFactory.createDictionaryReader(dictionary)
-    this.DictionaryReader = dictreader
+    this.DictionaryReader.initDict(dictionary)
     this._saveDictionaryFile(dictionary)
     return true;
   }
 
   dict(): DictionaryReader {
-    if(!DictionaryReader) throw Error("[Error] DictionaryReaderService: Dictionary used before initialization.")
-    
-    return this.DictionaryReader!
+    return this.DictionaryReader
   }
 }
