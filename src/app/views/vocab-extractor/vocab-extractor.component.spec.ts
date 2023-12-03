@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VocabUploadView } from './vocabupload.component';
+import { VocabExtractorComponent } from './vocab-extractor.component';
 
-describe('VocabuploadComponent', () => {
-  let component: VocabUploadView;
-  let fixture: ComponentFixture<VocabUploadView>;
+describe('VocabExtractorComponent', () => {
+  let component: VocabExtractorComponent;
+  let fixture: ComponentFixture<VocabExtractorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VocabUploadView ]
+      declarations: [ VocabExtractorComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VocabUploadView);
+    fixture = TestBed.createComponent(VocabExtractorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

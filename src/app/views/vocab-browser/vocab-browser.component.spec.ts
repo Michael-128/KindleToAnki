@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VocabBrowserComponent } from './vocabbrowser.component';
+import { VocabBrowserComponent } from './vocab-browser.component';
 
-describe('VocabbrowserComponent', () => {
+describe('VocabBrowserComponent', () => {
   let component: VocabBrowserComponent;
   let fixture: ComponentFixture<VocabBrowserComponent>;
 

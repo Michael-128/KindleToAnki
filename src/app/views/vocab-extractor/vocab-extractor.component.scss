@@ -1,0 +1,25 @@
+:host {
+    .lookup {
+        background-color: darken(white, 0%);
+        padding: 1.5rem;
+        margin: 1.5rem;
+
+        border-radius: .25rem;
+
+        box-shadow: 3px 3px 3px darken(white, 20%);
+    }
+
+    ol {
+        li {
+            color: rgb(48, 48, 48);
+        }
+    }
+
+    ::ng-deep {
+        .sentence-highlight {
+            color: black !important;
+            font-weight: 400;
+            text-decoration: underline;
+        }   
+    }
+}

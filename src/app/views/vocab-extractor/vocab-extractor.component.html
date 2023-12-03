@@ -1,0 +1,30 @@
+
+<div class="container">
+    <section class="section">
+        <h3 class="title is-3">Vocabulary Extractor</h3>
+
+        <div class="block">
+            <h4 class="title is-4">Kindle Vocabulary File</h4>
+
+            <app-file-upload (onFileChange)="onDatabaseChange($event)"  allowedExtensions=".db"></app-file-upload>
+        </div>
+        
+        <div class="block">
+            <h4 class="title is-4">Yomichan Dictionary File</h4>
+
+            <app-file-upload (onFileChange)="onDictionaryChange($event)" allowedExtensions=".zip"></app-file-upload>
+        </div>
+        
+        <div class="block">
+            <button class="button is-primary" (click)="onClickExtract()">Extract</button>
+        </div>
+    </section>
+</div>
+
+<!--<div class="lookup" *ngFor="let lookup of lookups">
+    <h3>Sentence</h3>
+    <div [innerHTML]="getLookedUpSentence(lookup)"></div>
+    <div class="definition" *ngFor="let definition of getDefinitions(lookup.getWord())">
+        {{definition}}
+    </div>
+</div>-->

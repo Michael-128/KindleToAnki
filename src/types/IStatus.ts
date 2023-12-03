@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, Subscriber } from "rxjs";
 
 export enum Status {
     UNINITIALIZED,
@@ -8,4 +8,5 @@ export enum Status {
 
 export interface IStatus {
     status: Observable<Status>
+    statusEmitter: Subscriber<Status>
 }

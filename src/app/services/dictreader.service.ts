@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { DictionaryReader } from 'src/classes/dictreader';
+import { Status } from 'src/types/IStatus';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class DictionaryReaderService {
   private DictionaryReader: DictionaryReader = new DictionaryReader()
 
   private async _init() {
+    this.DictionaryReader.status = of(Status.INITIALIZING)
     this.DictionaryReader.initDict(await this._getDictionaryFile())
   }
 

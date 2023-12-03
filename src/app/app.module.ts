@@ -5,16 +5,13 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms'
 import { RouterOutlet, provideRouter } from '@angular/router';
 
-import { VocabUploadView } from './views/vocabupload/vocabupload.component';
-import { DropzoneComponent } from './components/dropzone/dropzone.component';
-import { DictionaryUploadComponent } from './views/dictionaryupload/dictionaryupload.component';
-import { VocabBrowserComponent as VocabBrowserComponent } from './views/vocabbrowser/vocabbrowser.component';
+import { VocabExtractorComponent } from './views/vocab-extractor/vocab-extractor.component';
+import { VocabBrowserComponent } from './views/vocab-browser/vocab-browser.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    VocabBrowserComponent
   ],
   imports: [
     BrowserModule,
@@ -22,9 +19,10 @@ import { VocabBrowserComponent as VocabBrowserComponent } from './views/vocabbro
     RouterOutlet
   ],
   providers: [provideRouter([
-    {path: "", component: VocabUploadView},
-    {path: "dictionary", component: DictionaryUploadComponent},
-    {path: "vocab", component: VocabBrowserComponent}
+    {path: "", component: VocabExtractorComponent},
+    {path: "vocab", component: VocabBrowserComponent},
+    /*{path: "dictionary", component: DictionaryUploadComponent},
+    {path: "vocab", component: VocabBrowserComponent}*/
   ])],
   bootstrap: [AppComponent]
 })

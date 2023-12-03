@@ -1,16 +1,20 @@
 import { ITerm } from 'src/types/dictionary'
 import * as JSZip from '../../node_modules/jszip'
 import { IStatus, Status } from 'src/types/IStatus'
-import { Observable, of } from 'rxjs'
+import { Observable, Subscriber, of } from 'rxjs'
 
 export class DictionaryReader implements IStatus {
     private title: string = ""
     private termBank: ITerm[] = []
 
-    public status: Observable<Status> = of(Status.UNINITIALIZED)
+    public statusEmitter!: Subscriber<Status>;
+    public status = new Observable<Status>(subscriber => {
+        subscriber.next(Status.UNINITIALIZED)
+        this.statusEmitter = subscriber
+    })
 
     public async initDict(dictFile: Buffer) {
-        this.status = of(Status.INITIALIZING)
+        this.statusEmitter.next(Status.INITIALIZING)
 
         const jszip = JSZip()
         const content = await jszip.loadAsync(dictFile)
@@ -47,7 +51,7 @@ export class DictionaryReader implements IStatus {
         this.title = indexJson.title
         this.termBank = termBank
 
-        this.status = of(Status.INITIALIZED)
+        this.statusEmitter.next(Status.INITIALIZED)
     }
 
     public getDefinitions(keyword: string): string[] {
