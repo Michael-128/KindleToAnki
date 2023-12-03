@@ -14,7 +14,7 @@ export class DictionaryReaderService {
   private DictionaryReader: DictionaryReader = new DictionaryReader()
 
   private async _init() {
-    this.DictionaryReader.status = of(Status.INITIALIZING)
+    this.DictionaryReader.setStatus(Status.INITIALIZING)
     this.DictionaryReader.initDict(await this._getDictionaryFile())
   }
 

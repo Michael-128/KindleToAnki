@@ -1,21 +1,24 @@
 import { ITerm } from 'src/types/dictionary'
 import * as JSZip from '../../node_modules/jszip'
 import { IStatus, Status } from 'src/types/IStatus'
-import { Observable, Subscriber, of } from 'rxjs'
+import { Observable, of } from 'rxjs'
+import { EventEmitter } from '@angular/core'
 
 export class DictionaryReader implements IStatus {
     private title: string = ""
     private termBank: ITerm[] = []
 
-    public statusEmitter!: Subscriber<Status>;
-    public status = new Observable<Status>(subscriber => {
-        subscriber.next(Status.UNINITIALIZED)
-        this.statusEmitter = subscriber
-    })
+    public status: Status = Status.UNINITIALIZED
+    public statusChange = new EventEmitter<Status>()
+
+    setStatus(status: Status) {
+        this.status = status
+        this.statusChange.emit(status)
+    }
+
 
     public async initDict(dictFile: Buffer) {
-        this.statusEmitter.next(Status.INITIALIZING)
-
+        this.setStatus(Status.INITIALIZING)
         const jszip = JSZip()
         const content = await jszip.loadAsync(dictFile)
 
@@ -51,7 +54,7 @@ export class DictionaryReader implements IStatus {
         this.title = indexJson.title
         this.termBank = termBank
 
-        this.statusEmitter.next(Status.INITIALIZED)
+        this.setStatus(Status.INITIALIZED)
     }
 
     public getDefinitions(keyword: string): string[] {

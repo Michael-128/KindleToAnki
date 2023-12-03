@@ -1,23 +1,22 @@
 
 <div class="container">
     <section class="section">
-        <h3 class="title is-3">Vocabulary Extractor</h3>
+        <h3 class="title is-3">Kindle Vocabulary</h3>
 
-        <div class="block">
-            <h4 class="title is-4">Kindle Vocabulary File</h4>
-
-            <app-file-upload (onFileChange)="onDatabaseChange($event)"  allowedExtensions=".db"></app-file-upload>
-        </div>
-        
-        <div class="block">
-            <h4 class="title is-4">Yomichan Dictionary File</h4>
-
-            <app-file-upload (onFileChange)="onDictionaryChange($event)" allowedExtensions=".zip"></app-file-upload>
-        </div>
-        
-        <div class="block">
-            <button class="button is-primary" (click)="onClickExtract()">Extract</button>
-        </div>
+        <article class="message is-info" *ngFor="let lookup of lookups">
+            <span *ngIf="{word: lookup.getWord(), definitions: getDefinitions(lookup.getWord())} as variables">
+                <div class="message-header is-flex is-justify-content-space-between">
+                    <p><ruby><rb>{{ variables.word.word }}</rb> <rt>{{ variables.word.stem.replaceAll("‐", "") }}</rt></ruby></p>
+                    <p [innerHTML]="getLookedUpSentence(lookup)"></p>
+                </div>
+                <div class="message-body" *ngIf="variables.definitions.length > 0">
+                    <div class="my-3" *ngFor="let definition of variables.definitions">{{definition}}</div>
+                </div>
+                <div class="message-body" *ngIf="variables.definitions.length == 0">
+                    No definitions found.
+                </div>
+            </span>
+        </article>
     </section>
 </div>
 

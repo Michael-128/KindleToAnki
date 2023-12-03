@@ -7,6 +7,5 @@ export enum Status {
 }
 
 export interface IStatus {
-    status: Observable<Status>
-    statusEmitter: Subscriber<Status>
+    status: Status
 }

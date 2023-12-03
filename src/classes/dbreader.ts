@@ -2,22 +2,25 @@ import * as initSqlJs from "sql.js";
 import { Database } from "sql.js";
 import { IWord, IBookInfo, IDictInfo, ILookup } from '../types/database'
 import { IStatus, Status } from "src/types/IStatus";
-import { Observable, Subscriber, of } from "rxjs";
+import { EventEmitter } from "@angular/core";
 
 export class DBReader implements IStatus {
     db!: Database
 
-    public statusEmitter!: Subscriber<Status>;
-    public status = new Observable<Status>(subscriber => {
-        subscriber.next(Status.UNINITIALIZED)
-        this.statusEmitter = subscriber
-    })
+    public status: Status = Status.UNINITIALIZED
+    public statusChange = new EventEmitter<Status>()
+
+    setStatus(status: Status) {
+        this.status = status
+        this.statusChange.emit(status)
+    }
 
     async initDB(database: Buffer) {
-        this.statusEmitter.next(Status.INITIALIZING)
+        this.setStatus(Status.INITIALIZING)
+        this.statusChange.emit(this.status)
         const SQL = await initSqlJs({locateFile: url => "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.9.0/sql-wasm.wasm"})
         this.db = new SQL.Database(new Uint8Array(database))
-        this.statusEmitter.next(Status.INITIALIZED)
+        this.setStatus(Status.INITIALIZED)
     }
 
     getDictById(id: string): IDictInfo {
