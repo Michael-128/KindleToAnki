@@ -1,7 +1,10 @@
 
 <div class="container">
     <section class="section">
-        <h3 class="title is-3">Kindle Vocabulary</h3>
+        <div class="block is-flex is-justify-content-space-between">
+            <h3 class="title is-3">Kindle Vocabulary</h3>
+            <button class="button is-primary" (click)="getCSV()">Export CSV</button>
+        </div>
 
         <article class="message is-info" *ngFor="let lookup of lookups">
             <span *ngIf="{word: lookup.getWord(), definitions: getDefinitions(lookup.getWord())} as variables">

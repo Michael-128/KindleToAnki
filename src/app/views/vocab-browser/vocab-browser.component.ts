@@ -7,6 +7,7 @@ import { DBReaderService } from 'src/app/services/dbreader.service';
 import { DictionaryReaderService } from 'src/app/services/dictreader.service';
 import { Status } from 'src/types/IStatus';
 import { ILookup, IWord } from 'src/types/database';
+import { CSVParser } from 'src/classes/csvparser';
 
 @Component({
   selector: 'app-vocabbrowser',
@@ -37,13 +38,34 @@ export class VocabBrowserComponent {
   private getLookups() {
     this.lookups = this.DBReader.db().getAllLookups()
   }
+
+  getCSV() {
+    let lookups: string[][] = [];
+    
+    lookups = lookups.concat(this.lookups.map((lookup) => {
+      const word = lookup.getWord()
+      return [word.word, lookup.usage, this.getDefinitions(word).join("\\n")]
+    }))
+
+    const csv = CSVParser.getParsed(
+      ["word", "sentence", "definitions"],
+      lookups
+    )
+
+    const link = document.createElement("a");
+    const file = new Blob([csv], { type: 'text/plain' });
+    link.href = URL.createObjectURL(file);
+    link.download = "vocab.csv";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
   
   getDefinitions(word: IWord): string[] {
     var defs = this.DictionaryReader.dict().getDefinitions(word.word)
     defs = defs.flatMap(def => {
       return def.split("\n")
     })
-    console.log(defs)
+    //console.log(defs)
     return defs
   }
 
